@@ -46,12 +46,12 @@ def ssl_expiry_datetime(hostname):
 if __name__ == "__main__":
 
     domain="ssllabs.com"
-    domains_url = fetch_domains(domain)
-    for value in domains_url:
+
+    for subdomains in fetch_domains(domain):
         now = datetime.datetime.now()
         try:
-            expire = ssl_expiry_datetime(value)
+            expire = ssl_expiry_datetime(subdomains)
             diff = expire - now
-            print ("{} Expiration_date: {} Remaining_days: {}".format(value,expire.strftime("%d/%m/%Y"),diff.days))
+            print ("{} Expiration_date: {} Remaining_days: {}".format(subdomains,expire.strftime("%d/%m/%Y"),diff.days))
         except Exception as e:
-            print (value,"ERROR :",e)
+            print (subdomains,"ERROR :",e)
