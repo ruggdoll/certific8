@@ -4,7 +4,6 @@ import datetime
 import requests
 import json
 import argparse
-from bs4 import BeautifulSoup
 
 def fetch_domains(domain):
 	session = requests.session()
@@ -14,9 +13,7 @@ def fetch_domains(domain):
 	base_url = "https://crt.sh/?q={}&output=json&exclude=expired"
 	url = base_url.format(domain)
 	req = session.get(url)
-	content = req.content.decode('utf-8')
-	soup = BeautifulSoup(content, "html.parser")
-	data = list_cleanser(json.loads(soup.text))
+	data = list_cleanser(json.loads(req.content.decode('utf-8')))
 	return data
 
 def list_cleanser(rawlist):
