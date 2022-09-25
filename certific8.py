@@ -3,6 +3,7 @@ import ssl
 import datetime
 import requests
 import json
+import argparse
 from bs4 import BeautifulSoup
 
 def fetch_domains(domain):
@@ -44,10 +45,11 @@ def ssl_expiry_datetime(hostname):
     return datetime.datetime.strptime(ssl_info['notAfter'], ssl_dateformat)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("domain",help = "Domain name to analyse")
+    args = parser.parse_args()
 
-    domain="ssllabs.com"
-
-    for subdomains in fetch_domains(domain):
+    for subdomains in fetch_domains(args.domain):
         now = datetime.datetime.now()
         try:
             expire = ssl_expiry_datetime(subdomains)
