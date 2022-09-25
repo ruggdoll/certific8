@@ -10,8 +10,7 @@ def fetch_domains(domain):
 	ua = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'
 	headers = {'User-Agent': ua}
 	session.headers = headers
-	base_url = "https://crt.sh/?q={}&output=json&exclude=expired"
-	url = base_url.format(domain)
+	url = "https://crt.sh/?q="+domain+"{}&output=json&exclude=expired"
 	req = session.get(url)
 	data = list_cleanser(json.loads(req.content.decode('utf-8')))
 	return data
