@@ -49,5 +49,5 @@ if __name__ == "__main__":
             expire = ssl_expiry_datetime(subdomains)
             diff = expire - now
             print ("Domain:{} Expiration_date:{} Remaining_days:{}".format(subdomains,expire.strftime("%d/%m/%Y"),diff.days))
-	except Exception as e:
+        except Exception as e:
             print ("Domain:{} Error:{}".format(subdomains,e))
