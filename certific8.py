@@ -4,6 +4,7 @@ import datetime
 import requests
 import json
 import argparse
+from colorama import init,Back,Style
 
 def fetch_domains(domain):
     session = requests.session()
@@ -39,6 +40,7 @@ def ssl_expiry_datetime(hostname):
     return datetime.datetime.strptime(ssl_info['notAfter'], ssl_dateformat)
 
 if __name__ == "__main__":
+    init(autoreset=True)
     parser = argparse.ArgumentParser()
     parser.add_argument("domain",help = "Domain name to analyse")
     args = parser.parse_args()
@@ -48,6 +50,11 @@ if __name__ == "__main__":
         try:
             expire = ssl_expiry_datetime(subdomains)
             diff = expire - now
-            print ("Domain:{} Expiration_date:{} Remaining_days:{}".format(subdomains,expire.strftime("%d/%m/%Y"),diff.days))
+            message = "Domain:{} Expiration_date:{} Remaining_days:{}".format(subdomains,expire.strftime("%d/%m/%Y"),diff.days)
+            if diff.days < 15:
+                print (Back.RED + message)
+            else :
+                print (message)
+
         except Exception as e:
-            print ("Domain:{} Error:{}".format(subdomains,e))
+            print (Back.YELLOW + "Domain:{} Error:{}".format(subdomains,e))
