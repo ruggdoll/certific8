@@ -41,6 +41,11 @@ def ssl_expiry_datetime(hostname):
 
 if __name__ == "__main__":
     init(autoreset=True)
+    print(Back.RED + "Cert expired                 ")
+    print(Back.YELLOW + "Expiration in 15 days or less")
+    print(Back.BLUE + "Error while checking cert    ")
+    print("~-" * 25)
+
     parser = argparse.ArgumentParser()
     parser.add_argument("domain",help = "Domain name to analyse")
     args = parser.parse_args()
