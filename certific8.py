@@ -50,11 +50,15 @@ if __name__ == "__main__":
         try:
             expire = ssl_expiry_datetime(subdomains)
             diff = expire - now
-            message = "Domain:{} Expiration_date:{} Remaining_days:{}".format(subdomains,expire.strftime("%d/%m/%Y"),diff.days)
+            status_msg = "Domain:{} Expiration_date:{} Remaining_days:{}".format(subdomains,expire.strftime("%d/%m/%Y"),diff.days)
             if diff.days < 15:
-                print (Back.RED + message)
+                print (Back.YELLOW + status_msg)
             else :
-                print (message)
+                print (status_msg)
 
         except Exception as e:
-            print (Back.YELLOW + "Domain:{} Error:{}".format(subdomains,e))
+            error_msg = "Domain:{} Error:{}".format(subdomains,e)
+            if error_msg.find("certificate has expired") != -1:
+                print (Back.RED + error_msg)
+            else :
+                print (Back.BLUE + error_msg)
