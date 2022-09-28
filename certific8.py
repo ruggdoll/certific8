@@ -13,7 +13,11 @@ def fetch_domains(domain):
     session.headers = headers
     url = "https://crt.sh/?q="+domain+"&output=json&exclude=expired"
     req = session.get(url)
-    data = list_cleanser(json.loads(req.content.decode('utf-8')))
+    data = list_cleanser(
+               json.loads(
+                   req.content.decode('utf-8')
+               )
+            )
     return data
 
 def list_cleanser(rawlist):
@@ -27,9 +31,9 @@ def get_ssl_info(hostname):
     context = ssl.create_default_context()
     context.check_hostname = False
     conn = context.wrap_socket(
-        socket.socket(socket.AF_INET),
-        server_hostname=hostname,
-    )
+               socket.socket(socket.AF_INET),
+               server_hostname=hostname,
+            )
     # 5 second timeout
     conn.settimeout(5.0)
     conn.connect((hostname, 443))
@@ -50,7 +54,10 @@ if __name__ == "__main__":
         now = datetime.datetime.now()
         try:
             my_ssl_info = get_ssl_info(subdomains)
-            expire = datetime.datetime.strptime(my_ssl_info['notAfter'], ssl_dateformat)
+            expire = datetime.datetime.strptime(
+                my_ssl_info['notAfter'],
+                ssl_dateformat
+                )
             issuer = dict((x,y) for x,y in my_ssl_info['issuer'][1])
 #            print(issuer['organizationName'])
             diff = expire - now
