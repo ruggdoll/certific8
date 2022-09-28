@@ -11,6 +11,6 @@ python certific8.py DOMAIN.TLD | grep Issuer | cut -d";" -f2 | cut -d":" -f2 | s
 
 __News:__
 
-[27/09/2022] : Added colored output
-
 [29/09/2022] : Added Issuers support and "clean" output
+
+[27/09/2022] : Added colored output
