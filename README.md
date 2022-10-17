@@ -1,5 +1,5 @@
 # certific8
-From a FQDN to certificates expiration dates for all subdomains
+From a FQDN to certificates expiration dates for all subdomains found in crt.sh
 
 __Usage:__
 
