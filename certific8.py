@@ -22,7 +22,18 @@ def fetch_fqdn(domain):
             mylist.append(item["common_name"])
     return mylist
 
-def check_certificate(fqdn):
+def get_ssl_info(hostname):
+    context = ssl.create_default_context()
+    context.check_hostname = False
+    conn = context.wrap_socket(
+               socket.socket(socket.AF_INET),
+               server_hostname=hostname,
+            )
+    conn.settimeout(5.0)
+    conn.connect((hostname, 443))
+    return conn.getpeercert(binary_form=False)
+
+def get_certificate_info(fqdn):
     ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
     now = datetime.datetime.now()
     try:
@@ -72,16 +83,10 @@ def check_certificate(fqdn):
             "Error:{}".format(fqdn,e)
             print (Back.BLUE + error_msg)
 
-def get_ssl_info(hostname):
-    context = ssl.create_default_context()
-    context.check_hostname = False
-    conn = context.wrap_socket(
-               socket.socket(socket.AF_INET),
-               server_hostname=hostname,
-            )
-    conn.settimeout(5.0)
-    conn.connect((hostname, 443))
-    return conn.getpeercert()
+def get_wois_info(domain):
+    data=whois.query(domain)
+    return data
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -94,4 +99,4 @@ if __name__ == "__main__":
     print(Back.BLUE + "Error while checking cert    ")
     print("~-" * 25)
     for fqdn in fetch_fqdn(args.domain):
-        check_certificate(fqdn)
+        get_certificate_info(fqdn)
