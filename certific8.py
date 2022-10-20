@@ -83,10 +83,6 @@ def get_certificate_info(fqdn):
             "Error:{}".format(fqdn,e)
             print (Back.BLUE + error_msg)
 
-def get_wois_info(domain):
-    data=whois.query(domain)
-    return data
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
