@@ -3,11 +3,11 @@ From a FQDN to certificates expiration dates for all subdomains found in crt.sh
 
 __Usage:__
 
-python3 client.py DOMAIN.TLD
+python3 certific8.py DOMAIN.TLD
 
 #Who are the issuers :
 
-python client.py DOMAIN.TLD | grep Issuer | cut -d";" -f2 | cut -d":" -f2 | sort -u
+python certific8.py DOMAIN.TLD | grep Issuer | cut -d";" -f2 | cut -d":" -f2 | sort -u
 
 __News:__
 
