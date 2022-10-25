@@ -1,17 +1,14 @@
 from lib_certific8 import Certific8
 import argparse
-from colorama import init,Back,Style
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("domain",help = "Domain name to analyse")
+    parser.add_argument("--CSV", help="format output to CSV",action="store_true")
     args = parser.parse_args()
 
-    init(autoreset=True)
-    print(Back.RED + "Cert expired                 ")
-    print(Back.YELLOW + "Expiration in 15 days or less")
-    print(Back.BLUE + "Error while checking cert    ")
-    print("~-" * 25)
-
     mycerthandler = Certific8(args.domain)
-    mycerthandler.print_certificate_info()
+    if args.CSV:
+        mycerthandler.CSV_print_certificate_info()
+    else:
+        mycerthandler.console_print_certificate_info()
