@@ -1,10 +1,10 @@
+import datetime
+import json
 import socket
 import ssl
-import datetime
-import requests
-import json
-from colorama import init,Back,Style
 
+import requests
+from colorama import Back, Style, init
 
 
 class Certific8:
@@ -71,6 +71,7 @@ class Certific8:
                             stop_loop = 1
                             break
             diff = expire - now
+            
             status_msg = ""\
                 "FQDN:{};"\
                 "Issuer:{};"\
@@ -99,3 +100,7 @@ class Certific8:
                 "FQDN:{};"\
                 "Error:{}".format(fqdn,e)
                 print (Back.BLUE + error_msg)
+
+    def print_certificate_info(self):
+        for fqdn in self.get_fqdn_list():
+            self.get_certificate_info(fqdn)

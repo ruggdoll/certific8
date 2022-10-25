@@ -14,5 +14,4 @@ if __name__ == "__main__":
     print("~-" * 25)
 
     mycerthandler = Certific8(args.domain)
-    for fqdn in mycerthandler.get_fqdn_list():
-        mycerthandler.get_certificate_info(fqdn)
+    mycerthandler.print_certificate_info()
