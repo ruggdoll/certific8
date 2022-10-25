@@ -11,8 +11,6 @@ class Certific8:
         self.domain=domain
         self.fqdn_list={}
         self.set_fqdn_list()
-        for fqdn in self.fqdn_list:
-            self.set_certificate_info(fqdn)
     
     def set_fqdn_list(self):
         session = requests.session()
@@ -92,7 +90,17 @@ class Certific8:
         print(Back.YELLOW + "Expiration in 15 days or less")
         print(Back.BLUE + "Error while checking cert    ")
         print("~-" * 25)
+        if(len(self.fqdn_list) > 40):
+            print("Fetched: "
+                +str(len(self.fqdn_list))+" FQDNs"
+                )
+            print("Estimated time to complete: "
+                +str(int(len(self.fqdn_list)*0.5))
+                +" seconds"
+                )
+        print("~-" * 25)
         for fqdn in self.fqdn_list:
+            self.set_certificate_info(fqdn)
             if(self.fqdn_list[fqdn]['Error'] == ''):
                 status_msg=str(
                     "FQDN:"+fqdn+";"\
@@ -125,6 +133,7 @@ class Certific8:
     def CSV_print_certificate_info(self):
         print("FQDN;ISSUER;EXPIRES_ON,DAYCOUNT;ERROR")
         for fqdn in self.fqdn_list:
+            self.set_certificate_info(fqdn)
             if(self.fqdn_list[fqdn]['Error'] == ''):
                 status_msg=str(
                     fqdn+";"\
